@@ -1,0 +1,23 @@
+{
+  "name": "native-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "start": "node index",
+    "dev": "nodemon server",
+    "test": "mocha"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "mongodb": "^6.6.2",
+    "mongoose": "^8.3.5",
+    "nodemon": "^3.1.0"
+  }
+}
