@@ -16,11 +16,6 @@ const expenseSchema = new mongoose.Schema(
             require : true
         },
 
-        date : {
-            type : Date,
-            require : true
-        },
-
         createAt : {
             type : Date,
             default : Date.now
