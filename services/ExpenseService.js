@@ -26,9 +26,13 @@ const ExpenseService = {
         }
     },
 
-    async updateExpense(filter, update){
+    async updateExpense(expenseId, newValue){
+
+        const filter = { _id: expenseId };
+        const update = { $set: newValue };
+
         try {
-            return await ExpenseDao.updateExpense({filter, update})      
+            return await ExpenseDao.updateExpense(filter, update)      
         } catch (error) {
             console.log('An error ocorred while updating the expense', error.message)
         }

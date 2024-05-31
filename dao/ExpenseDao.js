@@ -5,8 +5,10 @@ const createExpense = async(expenseData)=>{
     return await Expense.create(expenseData);
 }
 
-const updateExpense = async({filter, update})=>{
-    return await Expense.findOneAndUpdate(filter, update);
+const updateExpense = async(filter, update)=>{
+    return await Expense.findOneAndUpdate(filter, update, {
+        new : true
+    });
 }
 
 const getAllExpenses = async()=>{

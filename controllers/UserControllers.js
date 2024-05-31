@@ -40,6 +40,50 @@ const UserControllers = {
 
                 res.status(response.status).json({ error: response.message, ...(response.details && {details: response.details})});
             })
+    },
+
+    async deleteUser(req, res){
+
+        const userId = req.params.id;
+        
+        if(!userId){
+            return res.status(404).json({success: false, message : "User ID is required"})
+        }
+
+        try {
+            const result = await UserService.deleteUser(userId);
+
+            if(result.acknowledged){
+                return res.status(200).json({message: "User delete successfully"})
+            }else{
+                return res.status(404).json(result)
+            }
+
+        } catch (error) {
+            return res.status(500).json({success: false, message: 'An internal error occurred'})
+        }
+    },
+
+    async updateUser(req, res){
+        const userId = req.params.id;
+
+        const newValue = req.body
+
+        if(!userId || !newValue){
+            return res.status(404).json({message : "User ID and body is required"})
+        }
+
+        try {
+            const result = await UserService.updateUser(userId, newValue)
+
+            if(result.id == userId){
+                return res.status(200).json({message: "User Update"})
+            }else{
+                return res.status(404).json(result)
+            }
+        } catch (error) {
+            return res.status(500).json({success: false, message: "An internal error occured"})
+        }
     }
 
 };
