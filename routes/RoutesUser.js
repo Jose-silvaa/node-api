@@ -9,4 +9,10 @@ router.get("/users", UserControllers.getAllUsers);
 //Route to create a new user
 router.post("/newUser", UserControllers.createUser);
 
+//Route to delete a user
+router.delete("/delete/:id", UserControllers.deleteUser);
+
+//Route to update a user
+router.put("/update/:id", UserControllers.updateUser)
+
 module.exports = router;

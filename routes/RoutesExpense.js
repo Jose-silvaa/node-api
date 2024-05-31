@@ -9,4 +9,10 @@ router.get("/expense", ExpenseController.getAllExpenses);
 //Route to create a new Expense
 router.post("/newExpense", ExpenseController.createExpense);
 
+//Route to delete a expense
+router.delete("/delete/:id", ExpenseController.deleteExpense)
+
+//Route to update a expense
+router.put("/update/:id", ExpenseController.updateExpense)
+
 module.exports = router
