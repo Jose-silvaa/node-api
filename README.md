@@ -22,8 +22,8 @@ GET  /users - Fetches a comprehensive list of all users, below we have an exampl
 	"_id": "664fe48a1c027a3bd0f8235e",
 	"name": "silva",
 	"email": "franklin@gmail.com",
-    "createdAt": "2024-05-24T00:51:22.140Z",
-    "__v": 0
+     "createdAt": "2024-05-24T00:51:22.140Z",
+     "__v": 0
   }    
 ]
 
@@ -69,15 +69,15 @@ GET  /expense - Fetches a list of all expenses, below we have an example of a re
 
 {
  "expenses": [
-	{
-		"_id": "665a3e5cdc52c5983b544be2",
-		"price": 40.25,
-		"description": "The price is cheaper",
-		"category": "Soda",
-		"status": "Unpaid",
-		"createAt": "2024-05-31T21:17:16.580Z",
-		"__v": 0
-	}
+   {
+	"_id": "665a3e5cdc52c5983b544be2",
+	"price": 40.25,
+	"description": "The price is cheaper",
+	"category": "Soda",
+	"status": "Unpaid",
+	"createAt": "2024-05-31T21:17:16.580Z",
+	"__v": 0
+   }
   ]
 }
 ```
