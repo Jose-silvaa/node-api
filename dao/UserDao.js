@@ -6,6 +6,14 @@ const UserDao = {
         return await User.find();
     },
 
+    async getUserByEmail(email){
+        return await User.findOne({"email" : email})
+    },
+
+    async getUserByUsername(username){
+        return await User.findOne({"username" : username})
+    },
+
     async createUser(userData){
         return await User.create(userData);
     },

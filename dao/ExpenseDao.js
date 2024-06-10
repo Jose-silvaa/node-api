@@ -6,7 +6,7 @@ const createExpense = async(expenseData)=>{
 }
 
 const updateExpense = async(filter, update)=>{
-    return await Expense.findOneAndUpdate(filter, update, {
+    return await Expense.findByIdAndUpdate(filter, update, {
         new : true
     });
 }
@@ -15,7 +15,7 @@ const getAllExpenses = async()=>{
     return await Expense.find();
 }
 
-const deleteExpense = async(_id)=>{
+const deleteExpense = async(_id)=>{ 
     return await Expense.deleteOne({_id: _id});
 }
 
