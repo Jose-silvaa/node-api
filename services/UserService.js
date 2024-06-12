@@ -6,6 +6,14 @@ const UserService = {
         return await UserDao.getAllUsers();
     },
 
+    async getUserByEmail(email){
+        return await UserDao.getUserByEmail(email)
+    }, 
+
+    async getUserByUsername(username){
+        return await UserDao.getUserByUsername(username)
+    },
+
     async createUser(userData){
         return await UserDao.createUser(userData);
     },

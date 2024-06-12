@@ -6,6 +6,12 @@ const UserControllers = require("../controllers/UserControllers");
 // Route to list all users
 router.get("/users", UserControllers.getAllUsers);
 
+//Router to get user by username
+router.get("/user/:username", UserControllers.getUserByUsername)
+
+//Route to get user by email
+router.get("/user/:email", UserControllers.getUserByEmail)
+
 //Route to create a new user
 router.post("/newUser", UserControllers.createUser);
 
