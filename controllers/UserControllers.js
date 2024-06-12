@@ -1,8 +1,10 @@
 //Controller to handle user-related operations
 
 const { getUserByEmail, getUserByUsername } = require("../dao/UserDao");
+const User = require("../models/User")
 const UserService = require("../services/UserService");
 const Bcrypt = require('bcrypt')
+
 
 const UserControllers = {
 
@@ -72,21 +74,21 @@ const UserControllers = {
 
         const repeatedProperties = { email : await getUserByEmail(user.email), username : await getUserByUsername(user.username)}
        
+        try {
 
-        for(const key in repeatedProperties){
-            let result = await repeatedProperties[key];
-            
-            if(result){
-                return res.status(409).json({error : `${key.charAt(0).toUpperCase() + key.slice(1)} already registered previously`})  
-            }else{
-                UserService.createUser(req.body)
-                .then(newUser =>{
-                    return res.status(201).json(newUser)
-                })
-                .catch(error => {
-                    return res.status(404).json({message: "Error while creating user"})//Mistake here
-                })
+            for(const key in repeatedProperties){
+                let result = await repeatedProperties[key];
+                
+                if(result){
+                    return res.status(409).json({error : `${key.charAt(0).toUpperCase() + key.slice(1)} already registered`})  
+                }    
             }
+
+            const newUser =  await UserService.createUser(req.body)
+            return res.status(201).json(newUser)
+
+        } catch (error) {
+            return res.status(404).json({message: "Error while creating user"})//Mistake here
         }
         
     },
@@ -103,9 +105,14 @@ const UserControllers = {
             const result = await UserService.deleteUser(userId);
 
             if(result.acknowledged){
-                return res.status(200).json({message: "User delete successfully"})
+                if(result.deletedCount === 1){
+                    return res.status(200).json({message: "User delete successfully"})
+                }else{
+                    return res.status(404).json({ message: 'No users found with the given ID' });
+                }
+
             }else{
-                return res.status(404).json(result)
+                return res.status(500).json({ message: 'Delete operation was not acknowledged by the server' });
             }
 
         } catch (error) {
@@ -115,20 +122,24 @@ const UserControllers = {
 
     async updateUser(req, res){
         const userId = req.params.id;
-
         const newValue = req.body
 
-        if(!userId || !newValue){
-            return res.status(404).json({message : "User ID and body is required"})
+        const userSchemaPaths = User.schema.paths;
+        const allowedProperties = new Set(Object.keys(userSchemaPaths))
+
+        for(key in newValue){
+            if(!allowedProperties.has(key)){
+                return res.status(404).json({message: `Invalid property: ${key}`})
+            }
         }
 
         try {
             const result = await UserService.updateUser(userId, newValue)
 
-            if(result.id == userId){
+            if(result){
                 return res.status(200).json({message: "User Update"})
             }else{
-                return res.status(404).json(result)
+                return res.status(404).json({message: "User not found"})
             }
         } catch (error) {
             return res.status(500).json({success: false, message: "An internal error occured"})

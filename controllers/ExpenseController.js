@@ -43,12 +43,12 @@ const ExpenseControllers = {
         
             if (result.acknowledged) {
                 if (result.deletedCount === 1) {
-                    return res.status(200).json({ success: true, message: 'Expense deleted successfully' });
+                    return res.status(200).json({ message: 'Expense deleted successfully' });
                 } else {
-                    return res.status(404).json({ success: false, message: 'No expense found with the given ID' });
+                    return res.status(404).json({ message: 'No expense found with the given ID' });
                 }
             } else {
-                return res.status(500).json({ success: false, message: 'Delete operation was not acknowledged by the server' });
+                return res.status(500).json({ message: 'Delete operation was not acknowledged by the server' });
             }
 
         } catch (error) {
