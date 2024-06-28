@@ -3,10 +3,33 @@
 const { getUserByEmail, getUserByUsername } = require("../dao/UserDao");
 const User = require("../models/User")
 const UserService = require("../services/UserService");
-const Bcrypt = require('bcrypt')
+const hashPassword = require("../utils/BcryptUtils");
+const bcrypt = require('bcrypt');
+const sendJwtToken = require("../utils/JwtUtils");
+
 
 
 const UserControllers = {
+
+    async login(req, res){
+        
+        const user = await UserService.getUserByUsername(req.body.username)
+
+        if(user == null){
+            return res.status(404).send("Cannot find user")
+        }
+
+        try{
+            if(await bcrypt.compare(req.body.password, user.password)){
+                // return res.status(200).json({message : "Success"})
+                sendJwtToken(user, res);
+            }else{
+               return res.status(401).json({message: "Not Allowed"})
+            }
+        }catch{
+            res.status(500).send("Error during login")
+        }
+    },
 
     getAllUsers(req, res){
         UserService.getAllUsers()
@@ -64,7 +87,8 @@ const UserControllers = {
 
     async createUser(req, res){
 
-        const user = { username : req.body.username, email : req.body.email,  password : req.body.password}
+        const hashedPassword = await hashPassword(req)
+        const user = { username : req.body.username, email : req.body.email,  password : hashedPassword}
 
         for(const key in user){
             if(!user[key]){
@@ -84,7 +108,7 @@ const UserControllers = {
                 }    
             }
 
-            const newUser =  await UserService.createUser(req.body)
+            const newUser =  await UserService.createUser(user)
             return res.status(201).json(newUser)
 
         } catch (error) {

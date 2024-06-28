@@ -12,6 +12,9 @@ router.get("/user/:username", UserControllers.getUserByUsername)
 //Route to get user by email
 router.get("/user/:email", UserControllers.getUserByEmail)
 
+//Route Login
+router.post("/user/login", UserControllers.login)
+
 //Route to create a new user
 router.post("/newUser", UserControllers.createUser);
 
