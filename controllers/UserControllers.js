@@ -3,7 +3,7 @@
 const { getUserByEmail, getUserByUsername } = require("../dao/UserDao");
 const User = require("../models/User")
 const UserService = require("../services/UserService");
-const hashPassword = require("../utils/BcryptUtils");
+const { hashPassword } = require("../utils/BcryptUtils");
 const bcrypt = require('bcrypt');
 const sendJwtToken = require("../utils/JwtUtils");
 
@@ -21,7 +21,6 @@ const UserControllers = {
 
         try{
             if(await bcrypt.compare(req.body.password, user.password)){
-                // return res.status(200).json({message : "Success"})
                 sendJwtToken(user, res);
             }else{
                return res.status(401).json({message: "Not Allowed"})
@@ -37,7 +36,7 @@ const UserControllers = {
                 if(users.length === 0){
                     res.status(204).send();
                 }else{
-                    res.status(200).json(users);
+                    res.json(users);
                 }
             })
             .catch(error =>{

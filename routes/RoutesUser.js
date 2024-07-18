@@ -1,10 +1,11 @@
 const express = require("express");
 const router = express.Router();
 const UserControllers = require("../controllers/UserControllers");
+const { authenticateToken } = require("../utils/BcryptUtils")
 
 
 // Route to list all users
-router.get("/users", UserControllers.getAllUsers);
+router.get("/users", authenticateToken, UserControllers.getAllUsers);
 
 //Router to get user by username
 router.get("/user/:username", UserControllers.getUserByUsername)
