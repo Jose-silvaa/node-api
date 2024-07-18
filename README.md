@@ -15,16 +15,25 @@ The API simulates the functionality of an expense control.
 Obs : All routes below require the preceding route __/visitor__
 
 ```bash
-GET  /users - Fetches a comprehensive list of all users, below we have an example of a response
+GET /user/:username - This route allows the user to fetch a specific user based on their username.
+```
+
+```bash
+GET /user/:email - This route allows the user to fetch a specific user based on their email.
+```
+
+```bash
+GET  /users - This is a protected route and requires an accessToken to be passed in the header. Additionally, it only returns the user who is logged in to the system
 
 [
   {
-	"_id": "664fe48a1c027a3bd0f8235e",
-	"name": "silva",
-	"email": "franklin@gmail.com",
-     "createdAt": "2024-05-24T00:51:22.140Z",
-     "__v": 0
-  }    
+		"_id": "66998ae58a0dc10c474633df",
+		"username": "jose",
+		"email": "jose@gmail.com",
+		"password": '"$2b$10$JTv3HYZELJC/J565SYemvu.6VXl4OkrHZPYtbJ1qvsz8qOjHMX5uu',
+		"createdAt": "2024-07-18T21:36:37.491Z",
+		"__v": 0
+	}
 ]
 
 ```
@@ -34,18 +43,37 @@ GET  /users - Fetches a comprehensive list of all users, below we have an exampl
 POST /newUser - Register a new user, below we have a necessary example body
 
 {
-  "name" : "Franklin",
-  "email" : "franklin@gmail.com"
+  {
+	  "username" : "jose",
+	  "email" : "jose@gmail.com",
+	  "password": "abcdefghij"
+  }
 }
 
 ```
+```bash
+ POST /user/login  - This route allows the user to log in, below we have a necessary example body and response
+
+  BODY 
+
+  {
+    "username" : "jose",
+    "password" : "senhausuario"
+  }
+
+  RESPONSE 
+  {
+	  "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyIkX18iOnsiYWN0aXZlUGF0aHMiOnsicGF0aHMiOnsicGFzc3dvcmQiOiJpbml0IiwiZW1haWwiOiJpbml0IiwidXNlcm5hbWUiOiJpbml0IiwiX2lkIjoiaW5pdCIsImNyZWF0ZWRBdCI6ImluaXQiLCJfX3YiOiJpbml0In0sInN0YXRlcyI6eyJyZXF1aXJlIjp7fSwiaW5pdCI6eyJf"
+  }
+```
+
 
 ```bash
 
 PUT /update/:id - Update a user, below we have a necessary example body
 
 {
-  "name" : "silva"
+	"username" : "jose vitor"
 }
 
 ```
